@@ -4,6 +4,7 @@ A simple web app to develop understanding of GraphQL.
 ### Prerequisites
 
 node.js, atom
+
 npm packages - graphql, express, lodash, mongoose
 
 ## Acknowledgments
