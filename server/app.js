@@ -3,8 +3,12 @@ const graphqlHTTP = require('express-graphql'); // not a package but a conventio
 const schema = require('./schema/schema');
 const config = require('./config/config');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
+
+// allow cross-origin requests
+app.use(cors());
 
 //connect to mongoDB.Atlas database
 const {mongoDB: {username,password,cluster,dbname}} = config;
