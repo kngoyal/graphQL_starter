@@ -3,8 +3,7 @@ const _ = require('lodash');
 
 const {GraphQLObjectType,GraphQLSchema,
        GraphQLString,GraphQLID,
-       GraphQLInt} = graphql;
-
+       GraphQLInt, GraphQLList} = graphql;
 
 // dummy data
 var books = [
@@ -21,10 +20,12 @@ var authors = [
   {name:'Terry Pratchett',age:66,id:'3'}
 ];
 
-
 // graphql data objects
 const BookType = new GraphQLObjectType({
   name: 'Book',
+  //fields is a function returning an object
+  //to prevent the Catch 22 situation of referencing between
+  //AuthorType and BookType when defined as an object
   fields: () => ({
     id: {type: GraphQLID},
     name: {type: GraphQLString},
@@ -43,10 +44,16 @@ const AuthorType = new GraphQLObjectType({
   fields: () => ({
     id: {type: GraphQLID},
     name: {type: GraphQLString},
-    age: {type: GraphQLInt}
+    age: {type: GraphQLInt},
+    books: {
+      type: new GraphQLList(BookType),
+      resolve(parent, args){
+        console.log("5.",parent,args);
+        return _.filter(books, {authorId:parent.id});
+      }
+    }
   })
 });
-
 
 // graphql query objects
 const RootQuery = new GraphQLObjectType({
@@ -68,7 +75,16 @@ const RootQuery = new GraphQLObjectType({
       args: {id: {type: GraphQLID}},
       resolve(parent, args){
         console.log("2.",parent,args);
-        return _.find(authors, {id: args.id});
+        let author = _.find(authors, {id: args.id});
+        console.log("6.",author);
+        return author;
+      }
+    },
+    books: {
+      type: new GraphQLList(BookType),
+      resolve(parent, args){
+        console.log("7.",parent,args);
+        return books;
       }
     }
   }
