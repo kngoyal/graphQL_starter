@@ -59,3 +59,25 @@
     }
   }
 }
+
+mutation {
+  addAuthor(name:"Patrick Rothfuss",age:44){
+    name
+    genre
+    author{
+      name
+      age
+    }
+  }
+}
+
+mutation {
+  addBook(name:"The Final Empire",genre:"Fantasy",authorId:"5c69b8acb80f3129a7d6b562"){
+    name
+    genre
+    author{
+      name
+      age
+    }
+  }
+}
