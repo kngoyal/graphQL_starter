@@ -1,0 +1,61 @@
+{
+  book(id:"3"){
+    name
+    genre
+    id
+  }
+}
+
+{
+	author(id:"3"){
+    name
+    age
+    id
+    books{
+      name
+      genre
+    }
+  }
+}
+
+{
+  book(id:"4"){
+    name
+    genre
+    author{
+      name
+      age
+    }
+  }
+}
+
+{
+  books{
+    name
+    genre
+    author{
+      name
+      age
+      books{
+        name
+      }
+    }
+  }
+}
+
+{
+  authors{
+    name
+    age
+    books{
+      name
+      genre
+      author{
+        name
+        books{
+          name
+        }
+      }
+    }
+  }
+}
